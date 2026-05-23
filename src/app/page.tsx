@@ -3,8 +3,10 @@ import {
   Brain,
   BriefcaseBusiness,
   Check,
+  CircleCheck,
   Flame,
   Headphones,
+  Quote,
   Radio,
   ShieldCheck,
   Sparkles,
@@ -13,6 +15,7 @@ import {
   Zap,
 } from "lucide-react";
 import Image from "next/image";
+import CompanySlider from "../components/CompanySlider";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
@@ -36,32 +39,44 @@ const features = [
   {
     icon: Radio,
     title: "Random Audio Calls",
-    text: "Instantly connect with English learners.",
+    text: "Instantly connect with learners who are ready to practice speaking.",
+    points: ["Quick matching", "Beginner friendly"],
+    badge: "Live practice",
   },
   {
     icon: Headphones,
     title: "English Cafes",
-    text: "Join live topic-based speaking rooms.",
+    text: "Join topic-based rooms for casual, interview, and daily conversation practice.",
+    points: ["Group speaking", "Listen first option"],
+    badge: "Topic rooms",
   },
   {
     icon: Brain,
     title: "AI Conversation Topics",
-    text: "Get smart prompts during conversations.",
+    text: "Never run out of things to say with prompts for real-world situations.",
+    points: ["Daily prompts", "Confidence cues"],
+    badge: "Smart support",
   },
   {
     icon: BriefcaseBusiness,
     title: "Interview Practice",
-    text: "Practice HR and placement interviews.",
+    text: "Prepare for HR rounds, introductions, and workplace communication.",
+    points: ["Mock answers", "Career focused"],
+    badge: "Job ready",
   },
   {
     icon: Flame,
     title: "Daily Speaking Challenges",
-    text: "Build consistency and confidence.",
+    text: "Build a regular speaking habit with small goals you can complete every day.",
+    points: ["Streak building", "Small daily tasks"],
+    badge: "Daily habit",
   },
   {
     icon: ShieldCheck,
     title: "Safe & Anonymous",
-    text: "Comfortable voice-first communication.",
+    text: "Practice comfortably with voice-first conversations and safer learner controls.",
+    points: ["Comfort mode", "Learner safety"],
+    badge: "Protected space",
   },
 ];
 
@@ -77,18 +92,21 @@ const testimonials = [
   {
     name: "Aarav Sharma",
     role: "Engineering student, Pune",
+    impact: "Placement confidence",
     quote:
       "Random calls helped me stop overthinking. I now speak in placement mocks without freezing.",
   },
   {
     name: "Meera Nair",
     role: "Freelancer, Bangalore",
+    impact: "Natural conversation",
     quote:
       "The cafes feel natural and low pressure. It is much easier than practicing alone with videos.",
   },
   {
     name: "Riya Khan",
     role: "MBA aspirant, Delhi",
+    impact: "Interview speaking",
     quote:
       "Interview rooms gave me daily speaking reps with real people preparing for the same goals.",
   },
@@ -139,7 +157,7 @@ const publicImages = [
     alt: "Sivi Speak landing page preview five",
   },
   {
-    src: "/ChatGPT Image May 20, 2026, 09_17_54 PM.png",
+    src: "/hero.png",
     alt: "Sivi Speak landing page preview six",
   },
 ];
@@ -241,6 +259,8 @@ export default function Home() {
         </div>
       </section>
 
+      <CompanySlider />
+
       <section className="section" id="features">
         <div className="media-heading">
           <div>
@@ -253,20 +273,29 @@ export default function Home() {
           </div>
           <Image
             className="section-image"
-            src={publicImages[1].src}
-            alt={publicImages[1].alt}
+            src="/feature.png"
+            alt="Sivi Speak features preview"
             width={1536}
             height={1024}
           />
         </div>
         <div className="feature-grid">
-          {features.map(({ icon: Icon, title, text }) => (
+          {features.map(({ icon: Icon, title, text, points, badge }) => (
             <article className="feature-card" key={title}>
               <div className="icon-box">
                 <Icon size={22} />
               </div>
               <h3>{title}</h3>
               <p>{text}</p>
+              <div className="feature-points">
+                {points.map((point) => (
+                  <span key={point}>
+                    <CircleCheck size={14} fill="currentColor" />
+                    {point}
+                  </span>
+                ))}
+              </div>
+              <div className="feature-badge">{badge}</div>
             </article>
           ))}
         </div>
@@ -343,8 +372,8 @@ export default function Home() {
           </div>
           <Image
             className="section-image"
-            src={publicImages[3].src}
-            alt={publicImages[3].alt}
+            src="/works.png"
+            alt="Live speaking practice connection illustration"
             width={1536}
             height={1024}
           />
@@ -382,29 +411,43 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section testimonial-section">
         <div className="section-heading">
           <span className="section-kicker">Testimonials</span>
           <h2>Learners are using live conversations to unlock fluency</h2>
         </div>
-        <div className="testimonial-grid">
-          {testimonials.map((item) => (
-            <article className="testimonial-card" key={item.name}>
-              <div className="stars" aria-label="5 star rating">
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <Star key={index} size={15} fill="currentColor" />
-                ))}
-              </div>
-              <p>&quot;{item.quote}&quot;</p>
-              <div className="testimonial-user">
-                <span>{item.name.slice(0, 1)}</span>
+        <div className="testimonial-showcase">
+          <div className="testimonial-grid">
+            {testimonials.map((item) => (
+              <article className="testimonial-card" key={item.name}>
                 <div>
-                  <strong>{item.name}</strong>
-                  <small>{item.role}</small>
+                  <div className="quote-icon" aria-hidden="true">
+                    <Quote size={24} fill="currentColor" />
+                  </div>
+                  <div className="stars" aria-label="5 star rating">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Star key={index} size={15} fill="currentColor" />
+                    ))}
+                    <span>5.0</span>
+                  </div>
+                  <p>&quot;{item.quote}&quot;</p>
                 </div>
-              </div>
-            </article>
-          ))}
+                <div>
+                  <div className="testimonial-user">
+                    <span>{item.name.slice(0, 1)}</span>
+                    <div>
+                      <strong>{item.name}</strong>
+                      <small>{item.role}</small>
+                    </div>
+                  </div>
+                  <div className="impact-pill">
+                    <CircleCheck size={14} fill="currentColor" />
+                    Improved: {item.impact}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
